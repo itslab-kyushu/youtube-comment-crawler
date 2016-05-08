@@ -4,13 +4,43 @@
   "description": "Youtube comment crawler",
   "main": "index.js",
   "scripts": {
+    "build": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Junpei Kawamoto <kawamoto.junpei@gmail.com>",
   "license": "UNLICENSED",
   "dependencies": {
+    "bootstrap": "^3.3.6",
     "express": "^4.13.4",
+    "react": "^15.0.2",
+    "react-dom": "^15.0.2",
     "youtube-comment-scraper": "0.0.6"
+  },
+  "style": [
+    "./src/css/main.css"
+  ],
+  "devDependencies": {
+    "browserify": "^13.0.1",
+    "coffee-reactify": "^5.0.0",
+    "coffee-script": "^1.10.0",
+    "coffeeify": "^2.0.1",
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-inject": "^4.0.0",
+    "gulp-jade": "^1.1.0",
+    "gulp-rework": "^1.2.0",
+    "gulp-uglify": "^1.5.3",
+    "jade": "^1.11.0",
+    "parcelify": "^2.1.0",
+    "rework-npm": "^1.0.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "browserify": {
+    "transform": [
+      "coffeeify",
+      "coffee-reactify"
+    ]
   },
   "private": true
 }
