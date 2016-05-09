@@ -1,6 +1,9 @@
 React = require "react"
 ReactDOM = require "react-dom"
+request = require "superagent"
 
+URL_REGISTER_IDS = "/lib/register-ids"
+URL_REGISTERED_IDS = "/lib/registered-ids"
 
 RegisterVideoID = React.createClass
 
@@ -12,11 +15,14 @@ RegisterVideoID = React.createClass
       videoIDs: e.target.value
 
   onClickRegister: (e) ->
-
+    request
+      .post URL_REGISTER_IDS
+      .send [1,2,3,4,5]
+      .end (err, res) =>
 
   render: ->
     <div className="container">
-      <h2>Register a new Video ID</h2>
+      <h2>Register new Video IDs</h2>
       <form>
         <div className="form-group">
           <label htmlFor="video-ids">Video IDs</label>
@@ -26,8 +32,8 @@ RegisterVideoID = React.createClass
             placeholder="Comma-separated video IDs"/>
         </div>
         <button
-          className="btn btn-default"
-          onClidk={@onClickRegister}>Register</button>
+          className="btn btn-default" type="button"
+          onClick={@onClickRegister}>Register</button>
       </form>
     </div>
 
@@ -38,8 +44,12 @@ RegisteredVideoIDs = React.createClass
     ids: []
 
   componentDidMount: ->
-    @setState
-      ids: ["a", "b", "c"]
+    request
+      .get URL_REGISTERED_IDS
+      .end (err, res) =>
+        console.log res
+        @setState
+          ids: res.body
 
   render: ->
     ids = @state.ids
@@ -47,7 +57,7 @@ RegisteredVideoIDs = React.createClass
       <h2>Registered Video IDs</h2>
       <ul>
         {ids.map (v) ->
-          <li key={v}>{v}</li>
+          <li key={v.key}>{v.value}</li>
         }
       </ul>
     </div>

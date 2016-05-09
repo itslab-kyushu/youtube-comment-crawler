@@ -5,15 +5,18 @@
   "main": "index.js",
   "scripts": {
     "build": "gulp",
+    "server": "./src/server/main.coffee",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Junpei Kawamoto <kawamoto.junpei@gmail.com>",
   "license": "UNLICENSED",
   "dependencies": {
+    "body-parser": "^1.15.1",
     "bootstrap": "^3.3.6",
     "express": "^4.13.4",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
+    "superagent": "^1.8.3",
     "youtube-comment-scraper": "0.0.6"
   },
   "style": [
