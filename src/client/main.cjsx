@@ -5,7 +5,40 @@ request = require "superagent"
 URL_REGISTER_IDS = "/lib/register-ids"
 URL_REGISTERED_IDS = "/lib/registered-ids"
 
+VideoIDManager = React.createClass
+
+  getInitialState: ->
+    registeredIDs: []
+
+  componentDidMount: ->
+    @loadRegisteredIDs()
+
+  handleRegister: (ids) ->
+    console.log ids
+    request
+      .post URL_REGISTER_IDS
+      .send ids
+      .end (err, res) =>
+        @loadRegisteredIDs()
+
+  loadRegisteredIDs: ->
+    request
+      .get URL_REGISTERED_IDS
+      .end (err, res) =>
+        @setState
+          registeredIDs: res.body
+
+  render: ->
+    <div>
+      <RegisterVideoID onRegister={@handleRegister}/>
+      <RegisteredVideoIDs ids={@state.registeredIDs}/>
+    </div>
+
+
 RegisterVideoID = React.createClass
+
+  propTypes:
+    onRegister: React.PropTypes.func
 
   getInitialState: ->
     videoIDs: ""
@@ -14,11 +47,13 @@ RegisterVideoID = React.createClass
     @setState
       videoIDs: e.target.value
 
-  onClickRegister: (e) ->
-    request
-      .post URL_REGISTER_IDS
-      .send [1,2,3,4,5]
-      .end (err, res) =>
+  handleRegisterButton: ->
+    if @state.videoIDs isnt ""
+      if @props.onRegister?
+        @props.onRegister @state.videoIDs.split(",").map (v) ->
+          v.replace(/^\s+|\s+$/g, "")
+      @setState
+        videoIDs: ""
 
   render: ->
     <div className="container">
@@ -31,42 +66,28 @@ RegisterVideoID = React.createClass
             value={@state.videoIDs} onChange={@handleVideoidsChange}
             placeholder="Comma-separated video IDs"/>
         </div>
+        <input type="text" name="dummy" style={{"display": "none"}}/>
         <button
           className="btn btn-default" type="button"
-          onClick={@onClickRegister}>Register</button>
+          onClick={@handleRegisterButton}>Register</button>
       </form>
     </div>
 
 
 RegisteredVideoIDs = React.createClass
 
-  getInitialState: ->
-    ids: []
-
-  componentDidMount: ->
-    request
-      .get URL_REGISTERED_IDS
-      .end (err, res) =>
-        console.log res
-        @setState
-          ids: res.body
+  propTypes:
+    ids: React.PropTypes.array
 
   render: ->
-    ids = @state.ids
     <div className="container">
       <h2>Registered Video IDs</h2>
       <ul>
-        {ids.map (v) ->
+        {@props.ids.map (v) ->
           <li key={v.key}>{v.value}</li>
         }
       </ul>
     </div>
 
 
-ReactDOM.render(
-  <div>
-    <RegisterVideoID/>
-    <RegisteredVideoIDs/>
-  </div>,
-  document.getElementById "react"
-)
+ReactDOM.render <VideoIDManager />, document.getElementById("react")
