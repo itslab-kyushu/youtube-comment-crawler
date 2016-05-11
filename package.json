@@ -15,13 +15,12 @@
     "bootstrap": "^3.3.6",
     "express": "^4.13.4",
     "react": "^15.0.2",
+    "react-bootstrap": "^0.29.4",
     "react-dom": "^15.0.2",
     "superagent": "^1.8.3",
     "youtube-comment-scraper": "0.0.6"
   },
-  "style": [
-    "./src/css/main.css"
-  ],
+  "style": [],
   "devDependencies": {
     "browserify": "^13.0.1",
     "coffee-reactify": "^5.0.0",

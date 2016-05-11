@@ -1,9 +1,13 @@
 React = require "react"
 ReactDOM = require "react-dom"
+{
+  Button, Grid, FormGroup, FormControl, ControlLabel, ListGroup, ListGroupItem
+} = require "react-bootstrap"
 request = require "superagent"
 
 URL_REGISTER_IDS = "/lib/register-ids"
 URL_REGISTERED_IDS = "/lib/registered-ids"
+
 
 VideoIDManager = React.createClass
 
@@ -35,6 +39,11 @@ VideoIDManager = React.createClass
     </div>
 
 
+# Rendering a form for a list of registering IDs.
+#
+# Props:
+#   onRegister: Function to be called when users click register button.
+#               It receives a list of IDs to be registered.
 RegisterVideoID = React.createClass
 
   propTypes:
@@ -43,11 +52,11 @@ RegisterVideoID = React.createClass
   getInitialState: ->
     videoIDs: ""
 
-  handleVideoidsChange: (e) ->
+  handleVideoIDsChange: (e) ->
     @setState
       videoIDs: e.target.value
 
-  handleRegisterButton: ->
+  handleRegister: ->
     if @state.videoIDs isnt ""
       if @props.onRegister?
         @props.onRegister @state.videoIDs.split(",").map (v) ->
@@ -56,38 +65,34 @@ RegisterVideoID = React.createClass
         videoIDs: ""
 
   render: ->
-    <div className="container">
+    <Grid>
       <h2>Register new Video IDs</h2>
       <form>
-        <div className="form-group">
-          <label htmlFor="video-ids">Video IDs</label>
-          <input
-            id="video-ids" className="form-control" type="text"
-            value={@state.videoIDs} onChange={@handleVideoidsChange}
+        <FormGroup controlId="video-ids">
+          <ControlLabel>Video IDs</ControlLabel>
+          <FormControl
+            value={@state.videoIDs} onChange={@handleVideoIDsChange}
             placeholder="Comma-separated video IDs"/>
-        </div>
-        <input type="text" name="dummy" style={{"display": "none"}}/>
-        <button
-          className="btn btn-default" type="button"
-          onClick={@handleRegisterButton}>Register</button>
+        </FormGroup>
+        <FormControl name="dummy" style={{"display": "none"}}/>
+        <Button onClick={@handleRegister}>Register</Button>
       </form>
-    </div>
+    </Grid>
 
 
-RegisteredVideoIDs = React.createClass
-
-  propTypes:
-    ids: React.PropTypes.array
-
-  render: ->
-    <div className="container">
-      <h2>Registered Video IDs</h2>
-      <ul>
-        {@props.ids.map (v) ->
-          <li key={v.key}>{v.value}</li>
-        }
-      </ul>
-    </div>
+# Rendering a list of registered IDs.
+#
+# Props:
+#   ids: List of IDs.
+RegisteredVideoIDs = (props) ->
+  <Grid>
+    <h2>Registered Video IDs</h2>
+    <ListGroup componentClass="ul">
+      {props.ids.map (v) ->
+        <ListGroupItem key={v}>{v}</ListGroupItem>
+      }
+    </ListGroup>
+  </Grid>
 
 
 ReactDOM.render <VideoIDManager />, document.getElementById("react")

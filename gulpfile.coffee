@@ -39,8 +39,6 @@ gulp.task "html", ["browserify", "css"], ->
 gulp.task 'clean', ->
   del [
       "#{conf.dest}/**/*"
-      "!#{conf.bowerDir}"
-      "!#{conf.bowerDir}/**/*"
   ]
 
 
