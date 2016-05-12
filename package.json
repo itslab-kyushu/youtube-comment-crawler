@@ -1,11 +1,12 @@
 {
-  "name": "youtube-crawler",
+  "name": "youtube-comment-crawler",
   "version": "0.0.1",
   "description": "Youtube comment crawler",
   "main": "index.js",
   "scripts": {
     "build": "gulp",
     "start": "./src/server/main.coffee",
+    "clean": "rm *.nosql",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Junpei Kawamoto <kawamoto.junpei@gmail.com>",
