@@ -16,6 +16,9 @@ VideoIDManager = React.createClass
 
   componentDidMount: ->
     @loadRegisteredIDs()
+    do pull = =>
+      @loadRegisteredIDs()
+      setTimeout pull, 5*60*1000
 
   handleRegister: (ids) ->
     console.log ids
