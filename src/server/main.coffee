@@ -53,7 +53,7 @@ app.get "/lib/registered-ids", (req, res) ->
         .type "json"
         .json selected
 
-    .catch (reason)
+    .catch (reason) ->
       console.error reason
       res.status 501
         .end()
