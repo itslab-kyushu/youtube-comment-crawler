@@ -15,10 +15,9 @@ VideoIDManager = React.createClass
     registeredIDs: []
 
   componentDidMount: ->
-    @loadRegisteredIDs()
     do pull = =>
       @loadRegisteredIDs()
-      setTimeout pull, 5*60*1000
+      setTimeout pull, 1*60*1000
 
   handleRegister: (ids) ->
     request
@@ -31,9 +30,9 @@ VideoIDManager = React.createClass
     request
       .get URL_REGISTERED_IDS
       .end (err, res) =>
-        console.log err
-        @setState
-          registeredIDs: res.body
+        if not err?
+          @setState
+            registeredIDs: res.body
 
   render: ->
     <div>
