@@ -4,7 +4,7 @@ bodyParser = require "body-parser"
 {CronJob} = require "cron"
 scraper = require "youtube-comment-scraper"
 nosql = require("nosql")
-{identity, insert_if_not_exists, exists, pop} = require "./db-helper"
+{identity, insert_if_not_exists, exists, pop, all} = require "./db-helper"
 
 # Cron time for the scraping job.
 CRON_TIME = "00 */5 * * * *"
@@ -47,11 +47,16 @@ app.post "/lib/register-ids", (req, res) ->
 
 # Add registered-ids handler.
 app.get "/lib/registered-ids", (req, res) ->
-  registered_ids.all identity, (err, selected) ->
-    res
-      .status 200
-      .type "json"
-      .json selected
+  all registered_ids
+    .then (selected) ->
+      res.status 200
+        .type "json"
+        .json selected
+
+    .catch (reason)
+      console.error reason
+      res.status 501
+        .end()
 
 
 app.listen 3000
@@ -85,11 +90,15 @@ job = new CronJob CRON_TIME, ->
               .then (res) ->
                 insert_if_not_exists channels, res, (doc, item) ->
                   doc.id is item.id
+          else
+            Promise.resolve()
 
         .catch (reason) ->
           console.error reason
 
+      else
+        Promise.resolve()
+
     .catch ->
-      
 
 job.start()

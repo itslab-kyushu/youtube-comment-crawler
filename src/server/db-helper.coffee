@@ -24,11 +24,13 @@ eq = (lhs, rhs) ->
 # @return [Promise] Promise object invoked with item inserted.  If no item was
 #   inserted, the Promise object will be fulfilled with nothing.
 insert_if_not_exists = (db, item, comp=eq) ->
-  new Promise (resolve) ->
+  new Promise (resolve, reject) ->
     db.one (doc) ->
       if comp doc, item then doc else null
     , (err, selected) ->
-      if not selected?
+      if err?
+        reject err
+      else if not selected?
         db.insert item, ->
           resolve item
       else
@@ -48,7 +50,10 @@ exists = (db, item, comp=eq) ->
     db.one (doc) ->
       if comp doc, item then doc else null
     , (err, selected) ->
-      resolve selected?
+      if err?
+        resolve err
+      else
+        resolve selected?
 
 
 # Pop an item from a database.
@@ -59,11 +64,28 @@ exists = (db, item, comp=eq) ->
 pop = (db) ->
   new Promise (resolve, reject) ->
     db.one identity, (err, selected) ->
-      if selected?
+      if err?
+        reject err
+
+      else if selected?
         db.remove eq.bind(undefined, selected), ->
           resolve selected
       else
         reject()
+
+
+# Fetch all items in a database.
+#
+# @param db [nosql.Database] Database.
+# @return [Promise] Promise object will be fulfilled with all items in the
+#   database.
+all = (db) ->
+  new Promise (resolve, reject) ->
+    db.all identity, (err, selected) ->
+      if err?
+        reject err
+      else
+        resolve selected
 
 
 module.exports =
@@ -72,3 +94,4 @@ module.exports =
   insert_if_not_exists: insert_if_not_exists
   exists: exists
   pop: pop
+  all: all
