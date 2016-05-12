@@ -1,5 +1,6 @@
 React = require "react"
 ReactDOM = require "react-dom"
+ReactCSSTransitionGroup = require "react-addons-css-transition-group"
 {
   Button, Grid, FormGroup, FormControl, ControlLabel, ListGroup, ListGroupItem
 } = require "react-bootstrap"
@@ -90,9 +91,13 @@ RegisteredVideoIDs = (props) ->
   <Grid>
     <h2>Registered Video IDs</h2>
     <ListGroup componentClass="ul">
-      {props.ids.map (v) ->
-        <ListGroupItem key={v}>{v}</ListGroupItem>
-      }
+      <ReactCSSTransitionGroup
+        transitionName="registered-ids"
+        transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+        {props.ids.map (v) ->
+          <ListGroupItem key={v}>{v}</ListGroupItem>
+        }
+      </ReactCSSTransitionGroup>
     </ListGroup>
   </Grid>
 
