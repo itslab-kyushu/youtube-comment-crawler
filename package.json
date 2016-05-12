@@ -11,6 +11,14 @@
   },
   "author": "Junpei Kawamoto <kawamoto.junpei@gmail.com>",
   "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itslab-kyushu/youtube-comment-crawler.git"
+  },
+  "homepage": "https://github.com/itslab-kyushu/youtube-comment-crawler",
+  "bugs": {
+    "url": "https://github.com/itslab-kyushu/youtube-comment-crawler/issues"
+  },
   "dependencies": {
     "body-parser": "^1.15.1",
     "bootstrap": "^3.3.6",
