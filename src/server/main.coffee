@@ -5,6 +5,7 @@ bodyParser = require "body-parser"
 scraper = require "youtube-comment-scraper"
 nosql = require("nosql")
 
+# Cron time for the scraping job.
 CRON_TIME = "00 */5 * * * *"
 
 
@@ -30,10 +31,9 @@ eq = (lhs, rhs) ->
 # @param db [nosql.Database] Database.
 # @param item [Object] An item checked existence.
 # @param comp [Function] Cmparing function which receives a document stored in
-#                        the database and the argument *item*.
-#                        (Default: eq)
+#   the database and the argument *item*. (Default: eq)
 # @return [Promise] Promise object invoked with item inserted.  If no item was
-#                   inserted, the Promise object will be fulfilled with nothing.
+#   inserted, the Promise object will be fulfilled with nothing.
 insert_if_not_exists = (db, item, comp=eq) ->
   new Promise (resolve) ->
     db.one (doc) ->
@@ -51,10 +51,9 @@ insert_if_not_exists = (db, item, comp=eq) ->
 # @param db [nosql.Database] Database.
 # @param item [Object] An item checked existence.
 # @param comp [Function] Cmparing function which receives a document stored in
-#                        the database and the argument *item*.
-#                        (Default: eq)
+#   the database and the argument *item*. (Default: eq)
 # @return [Promise] Promise object will be fulfilled with true if the item
-#                   exists in the database otherwise false.
+#   exists in the database otherwise false.
 exists = (db, item, comp=eq) ->
   new Promise (resolve) ->
     db.one (doc) ->
@@ -67,7 +66,7 @@ exists = (db, item, comp=eq) ->
 #
 # @param db [nosql.Database] Database.
 # @return [Promise] Promise object will be fulfilled with an item. If there are
-#                   no items, it will be rejected.
+#   no items, it will be rejected.
 pop = (db) ->
   new Promise (resolve, reject) ->
     db.one identity, (err, selected) ->
