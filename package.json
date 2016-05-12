@@ -15,7 +15,7 @@
     "bootstrap": "^3.3.6",
     "cron": "^1.1.0",
     "express": "^4.13.4",
-    "jsonfile": "^2.3.0",
+    "nosql": "^3.1.0",
     "react": "^15.0.2",
     "react-bootstrap": "^0.29.4",
     "react-dom": "^15.0.2",

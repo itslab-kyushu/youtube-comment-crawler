@@ -21,7 +21,6 @@ VideoIDManager = React.createClass
       setTimeout pull, 5*60*1000
 
   handleRegister: (ids) ->
-    console.log ids
     request
       .post URL_REGISTER_IDS
       .send ids
@@ -32,6 +31,7 @@ VideoIDManager = React.createClass
     request
       .get URL_REGISTERED_IDS
       .end (err, res) =>
+        console.log err
         @setState
           registeredIDs: res.body
 
