@@ -12,9 +12,15 @@ rework = require "gulp-rework"
 reworkNPM = require "rework-npm"
 
 conf =
-  src: './src'
-  dest: './public'
+  src: "./src"
+  dest: "./public"
   prod: false
+
+
+gulp.task 'clean', ->
+  del [
+      "#{conf.dest}/**/*"
+  ]
 
 
 gulp.task "html", ["browserify", "css"], ->
@@ -34,12 +40,6 @@ gulp.task "html", ["browserify", "css"], ->
       ignorePath: ignores
     )
     .pipe gulp.dest "#{conf.dest}/"
-
-
-gulp.task 'clean', ->
-  del [
-      "#{conf.dest}/**/*"
-  ]
 
 
 gulp.task 'browserify', ['clean'], ->
