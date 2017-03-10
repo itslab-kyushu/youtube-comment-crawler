@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "build": "gulp",
-    "start": "./src/server/main.coffee",
+    "start": "node lib/main.js",
     "clean": "rm *.nosql",
     "doc": "codo src",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "check-update": "ncu -u"
   },
   "author": "Junpei Kawamoto <kawamoto.junpei@gmail.com>",
   "license": "UNLICENSED",
@@ -21,43 +22,23 @@
     "url": "https://github.com/itslab-kyushu/youtube-comment-crawler/issues"
   },
   "dependencies": {
-    "body-parser": "^1.15.1",
-    "bootstrap": "^3.3.6",
-    "coffee-script": "^1.10.0",
-    "cron": "^1.1.0",
-    "express": "^4.13.4",
-    "nosql": "^3.1.0",
-    "react": "^15.0.2",
-    "react-addons-css-transition-group": "^15.0.2",
-    "react-bootstrap": "^0.29.4",
-    "react-dom": "^15.0.2",
-    "superagent": "^1.8.3",
-    "youtube-comment-scraper": "0.0.7"
+    "cheerio": "^0.22.0",
+    "nedb": "^1.8.0",
+    "phantom": "^4.0.0",
+    "youtube-comment-scraper": "^0.1.0"
   },
   "style": [],
   "devDependencies": {
-    "browserify": "^13.0.1",
-    "codo": "^2.1.0",
-    "coffee-reactify": "^5.0.0",
-    "coffee-script": "^1.10.0",
-    "coffeeify": "^2.0.1",
-    "del": "^2.2.0",
+    "babel-preset-es2015": "^6.22.0",
+    "del": "^2.2.2",
     "gulp": "^3.9.1",
-    "gulp-inject": "^4.0.0",
-    "gulp-jade": "^1.1.0",
-    "gulp-rework": "^1.2.0",
-    "gulp-uglify": "^1.5.3",
-    "jade": "^1.11.0",
-    "parcelify": "^2.1.0",
-    "rework-npm": "^1.0.0",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
-  },
-  "browserify": {
-    "transform": [
-      "coffeeify",
-      "coffee-reactify"
-    ]
+    "gulp-babel": "^6.1.2",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-pug": "^3.2.0",
+    "gulp-uglify": "^2.0.1",
+    "jstransformer-babel": "^2.1.0",
+    "jstransformer-markdown-it": "^2.0.0",
+    "npm-check-updates": "^2.10.2"
   },
   "private": true
 }
