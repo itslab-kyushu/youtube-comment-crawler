@@ -5,6 +5,7 @@ const NeDB = require("nedb");
 const scraper = require("youtube-comment-scraper");
 const trends = require("./trends");
 
+const TIMEOUT = 15 * 60 * 1000;
 
 // newDB creates a database object which has ids and comments.
 // This function takes id and comment arguments. Both are the paths to be loaded
@@ -40,22 +41,48 @@ function getComments(db) {
         if (docs.length != 0) {
             const id = docs[0].id;
             console.log(`Start scraping comments in video ${id}`);
-            scraper.comments(id).then((res) => {
+
+            const scraping = scraper.comments(id).then((res) => {
                 console.log(res);
-                db.comments.insert(res);
-                db.ids.update({
-                    id: id
-                }, {
-                    $set: {
-                        scraped: true
-                    }
-                }, {}, () => {
+                return new Promise((resolve, reject) => {
+                    db.comments.insert(res, (err) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve();
+                        }
+                    });
+                }).then(() => {
+                    return new Promise((resolve, reject) => {
+                        db.ids.update({
+                            id: id
+                        }, {
+                            $set: {
+                                scraped: true
+                            }
+                        }, {}, (err) => {
+                            if (err) {
+                                reject(err);
+                            } else {
+                                resolve();
+                            }
+                        });
+                    });
+                });
+            });
+            const timeout = new Promise((_, reject) => {
+                setTimeout(() => {
+                    reject("Timeout");
+                }, TIMEOUT);
+            });
+            Promise.race([scraping, timeout])
+                .then(() => {
                     console.log(`End scraping comments in video ${id}`);
                     scraper.close();
-                })
-            }).catch((err) => {
-                console.error(err);
-            });
+                }).catch((err) => {
+                    console.error(`Scraping was failed: ${err}`);
+                    scraper.close();
+                });
         }
     });
 }
