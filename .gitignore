@@ -1,6 +1,6 @@
-public
-*.nosql
+bin
 doc
+data
 lib
 *.pyc
 

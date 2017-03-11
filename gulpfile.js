@@ -16,27 +16,39 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const gulp = require("gulp");
-const del = require("del");
 const babel = require("gulp-babel");
+const chmod = require("gulp-chmod");
+const del = require("del");
 
 const conf = {
     src: "src",
     dest: "lib",
+    bin: "bin"
 };
 
 gulp.task("default", ["build"]);
-gulp.task("build", ["babel"]);
+gulp.task("build", ["babel", "bin"]);
 
 // Clean destination.
 gulp.task("clean", () => {
-    return del([`${conf.dest}/**/*`]);
+    return del([`${conf.dest}/**/*`, `${conf.bin}/**/*`]);
 });
 
 // Transpile Js files.
 gulp.task("babel", ["clean"], () => {
-    return gulp.src(`${conf.src}/*.js`)
+    return gulp.src([`${conf.src}/*.js`, `!${conf.src}/cli.js`])
         .pipe(babel({
             presets: ["es2015"]
         }))
         .pipe(gulp.dest(`${conf.dest}/`));
+});
+
+// Transpile cli.js.
+gulp.task("bin", ["clean"], () => {
+    return gulp.src(`${conf.src}/cli.js`)
+        .pipe(babel({
+            presets: ["es2015"]
+        }))
+        .pipe(chmod(0o755))
+        .pipe(gulp.dest(`${conf.bin}/`));
 });

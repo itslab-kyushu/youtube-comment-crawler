@@ -2,10 +2,11 @@
   "name": "youtube-comment-crawler",
   "version": "0.0.1",
   "description": "Youtube comment crawler",
-  "main": "index.js",
+  "main": "lib/crawler.js",
   "scripts": {
     "build": "gulp",
-    "start": "node lib/main.js",
+    "start": "./bin/cli.js --id ./data/ids.json --comment ./data/comments.json",
+    "crawl": "./bin/cli.js --id ./data/ids.json --comment ./data/comments.json crawl",
     "test": "echo \"Error: no test specified\" && exit 1",
     "check-update": "ncu -u"
   },
@@ -24,6 +25,7 @@
     "cron": "^1.2.1",
     "nedb": "^1.8.0",
     "phantom": "^4.0.0",
+    "yargs": "^7.0.2",
     "youtube-comment-scraper": "^0.1.0"
   },
   "devDependencies": {
@@ -31,6 +33,7 @@
     "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
+    "gulp-chmod": "^2.0.0",
     "npm-check-updates": "^2.10.2"
   },
   "private": true
