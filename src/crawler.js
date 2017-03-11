@@ -6,12 +6,10 @@ const scraper = require("youtube-comment-scraper");
 const trends = require("./trends");
 
 
-// crawler takes three options. lang speficies which language the new crawler
-// uses to obtain trending video IDs. id and comment are paths to output files
-// to store video IDs and comments.
-module.exports = function(lang, id, comment) {
-
-    // Set up databases to store results.
+// newDB creates a database object which has ids and comments.
+// This function takes id and comment arguments. Both are the paths to be loaded
+// as id and comment database file, respectively.
+function newDB(id, comment) {
     const db = {};
     db.ids = new NeDB({
         filename: id,
@@ -23,40 +21,52 @@ module.exports = function(lang, id, comment) {
         autoload: true,
         timestampData: true
     });
+    return db;
+}
 
-    // getComments is a task invoked by a cron job. This task scrapes comments
-    // from a video of which ID is the oldest one in the ID database.
-    function getComments() {
-        db.ids.find({
-            scraped: {
-                $exists: false
-            }
-        }).sort({
-            "createdAt.$$date": 1
-        }).limit(1).exec((err, docs) => {
-            if (err) {
+// getComments is a task invoked by a cron job. This task scrapes comments
+// from a video of which ID is the oldest one in the ID database.
+function getComments(db) {
+    db.ids.find({
+        scraped: {
+            $exists: false
+        }
+    }).sort({
+        "createdAt.$$date": 1
+    }).limit(1).exec((err, docs) => {
+        if (err) {
+            console.error(err);
+        }
+        if (docs.length != 0) {
+            const id = docs[0].id;
+            console.log(`Start scraping comments in video ${id}`);
+            scraper.comments(id).then((res) => {
+                console.log(res);
+                db.comments.insert(res);
+                db.ids.update({
+                    id: id
+                }, {
+                    $set: {
+                        scraped: true
+                    }
+                }, {}, () => {
+                    console.log(`End scraping comments in video ${id}`);
+                    scraper.close();
+                })
+            }).catch((err) => {
                 console.error(err);
-            }
-            if (docs.length != 0) {
-                const id = docs[0].id;
-                console.log(`Start scraping comments in video ${id}`);
-                scraper.comments(id).then((res) => {
-                    console.log(res);
-                    db.comments.insert(res);
-                    db.ids.update({
-                        id: id
-                    }, {
-                        $set: {
-                            scraped: true
-                        }
-                    }, {}, () => {
-                        console.log(`End scraping comments in video ${id}`);
-                        scraper.close();
-                    })
-                });
-            }
-        });
-    }
+            });
+        }
+    });
+}
+
+// crawler takes three options. lang speficies which language the new crawler
+// uses to obtain trending video IDs. id and comment are paths to output files
+// to store video IDs and comments.
+function start(lang, id, comment) {
+
+    // Set up databases to store results.
+    const db = newDB(id, comment);
 
     const getIDJob = new CronJob({
         cronTime: "0 0 0 * * *",
@@ -69,7 +79,7 @@ module.exports = function(lang, id, comment) {
     const getCommentJob = new CronJob({
         cronTime: "0 */30 * * * *",
         onTick: () => {
-            getComments();
+            getComments(db);
         },
         start: true
     });
@@ -86,5 +96,16 @@ module.exports = function(lang, id, comment) {
             });
         }
     });
+}
 
+// crawl runs getComments one time, which gets one Video ID from the ids
+// database, scrapes comments fromt the video, and then stores the comments to
+// the comment database.
+function crawl(id, comment) {
+    return getComments(newDB(id, comment))
+}
+
+module.exports = {
+    start: start,
+    crawl: crawl
 }
