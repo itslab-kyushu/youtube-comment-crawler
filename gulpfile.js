@@ -18,21 +18,14 @@
 const gulp = require("gulp");
 const del = require("del");
 const babel = require("gulp-babel");
-const pug = require("gulp-pug");
-const uglify = require("gulp-uglify");
-const htmlmin = require("gulp-htmlmin");
 
 const conf = {
     src: "src",
     dest: "lib",
-    prod: false
 };
 
 gulp.task("default", ["build"]);
-gulp.task("build", ["babel", "views"]);
-
-// Set production mode.
-gulp.task("prod", () => conf.prod = true);
+gulp.task("build", ["babel"]);
 
 // Clean destination.
 gulp.task("clean", () => {
@@ -41,24 +34,9 @@ gulp.task("clean", () => {
 
 // Transpile Js files.
 gulp.task("babel", ["clean"], () => {
-    let p = gulp.src(`${conf.src}/*.js`)
+    return gulp.src(`${conf.src}/*.js`)
         .pipe(babel({
             presets: ["es2015"]
-        }));
-    if (conf.prod) {
-        p = p.pipe(uglify());
-    }
-    return p.pipe(gulp.dest(`${conf.dest}/`));
-});
-
-// Compile Pug templates.
-gulp.task("views", ["clean"], () => {
-    let p = gulp.src(`${conf.src}/*.pug`)
-        .pipe(pug());
-    if (conf.prod) {
-        p = p.pipe(htmlmin({
-            collapseWhitespace: true
-        }));
-    }
-    return p.pipe(gulp.dest(`${conf.dest}/`));
+        }))
+        .pipe(gulp.dest(`${conf.dest}/`));
 });
