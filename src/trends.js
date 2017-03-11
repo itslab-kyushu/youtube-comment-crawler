@@ -5,25 +5,39 @@ const phantom = require("phantom");
 // the given database. This function returns a promise.
 module.exports = function(lang, db) {
 
-    // findIDs parse a given html and find video IDs.
+    // findIDs parse a given html and find video IDs. This function returns a
+    // promise.
     function findIDs(html) {
+
         const $ = cheerio.load(html);
+        const promises = [];
         $(".yt-lockup-video").each((_, elem) => {
-            const id = $(elem).attr("data-context-item-id");
-            db.ids.find({
-                id: id
-            }, (err, docs) => {
-                if (err) {
-                    console.error(err);
-                }
-                if (docs.length == 0) {
-                    db.ids.insert({
-                        id: id
-                    });
-                    console.log(id);
-                }
-            })
+
+            promises.push(new Promise((resolve, reject) => {
+
+                const id = $(elem).attr("data-context-item-id");
+                db.ids.find({
+                    id: id
+                }, (err, docs) => {
+                    if (err) {
+                        console.error(err);
+                        reject(err);
+                        return
+                    }
+                    if (docs.length == 0) {
+                        db.ids.insert({
+                            id: id
+                        });
+                        console.log(`Insert a new video ID: ${id}`);
+                    }
+                    resolve();
+                });
+
+            }));
+
         });
+        return Promise.all(promises);
+
     }
 
     return phantom.create().then((instance) => {
@@ -59,8 +73,8 @@ module.exports = function(lang, db) {
                     return document.getElementsByClassName("expanded-shelf")[0].innerHTML;
                 });
             }).then((html) => {
-                findIDs(html);
                 page.close();
+                return findIDs(html);
             });
 
         }).then(() => {
