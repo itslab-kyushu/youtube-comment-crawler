@@ -10,7 +10,7 @@
     "check-update": "ncu -u"
   },
   "author": "Junpei Kawamoto <kawamoto.junpei@gmail.com>",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/itslab-kyushu/youtube-comment-crawler.git"
@@ -30,5 +30,12 @@
   "devDependencies": {
     "npm-check-updates": "^2.10.2"
   },
+  "files": [
+    "bin",
+    "lib",
+    "LICENSE",
+    "package.json",
+    "README.md"
+  ],
   "private": true
 }
