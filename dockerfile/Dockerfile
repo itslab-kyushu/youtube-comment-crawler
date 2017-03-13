@@ -30,5 +30,4 @@ ADD package.json .
 RUN npm install
 COPY . .
 
-ENTRYPOINT ["/bin/bash"]
-CMD ["./bin/cli.js", "--id", "/data/ids.json", "--comment", "/data/comments.json"]
+ENTRYPOINT ["/root/dockerfile/entrypoint.sh"]
