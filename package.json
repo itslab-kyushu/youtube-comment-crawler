@@ -1,6 +1,6 @@
 {
   "name": "youtube-comment-crawler",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Youtube comment crawler",
   "main": "lib/crawler.js",
   "scripts": {
@@ -25,7 +25,7 @@
     "nedb": "^1.8.0",
     "phantom": "^4.0.0",
     "yargs": "^7.0.2",
-    "youtube-comment-scraper": "^0.2.0"
+    "youtube-comment-scraper": "^0.2.1"
   },
   "devDependencies": {
     "npm-check-updates": "^2.10.2"

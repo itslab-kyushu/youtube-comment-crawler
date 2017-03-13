@@ -12,7 +12,7 @@ def build():
     """
     run("mkdir -p " + PACKAGE)
     rsync_project(
-        local_dir=".", remote_dir=PACKAGE, exclude=[".git", "node_modules", "lib", "data"])
+        local_dir=".", remote_dir=PACKAGE, exclude=[".git", "node_modules", "data"])
     with cd(PACKAGE):
         run("docker build -t itslabq/{0} -f dockerfile/Dockerfile .".format(PACKAGE))
 
