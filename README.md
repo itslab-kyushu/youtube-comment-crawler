@@ -1,40 +1,27 @@
-Youtube Comment Crawler
-=========================
-Crawling Youtube comments registered via Web interface.
+# Youtube Comment Crawler
+[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
-Prepare
----------
+Scraping trending video page every day and scraping comments posted to those
+videos.
+
+
+## Prepare
 Install related modules via npm.
 
 ```sh
 $ npm install
 ```
 
-Then, build this application.
+## Run
 
 ```sh
-$ npm run build
+$ npm start --id <path to ID DB> --comment <path to comment DB>
 ```
 
-Run
------
+ID database and comment database are JSON files.
 
-```sh
-$ npm start
-```
 
-Then, access http://localhost:3000/
 
-Usage
-------
-Add video IDs to be scraped via the web UI.
-Every 5 min, comments of one vide will be scraped.
-It also scrapes channel descriptions related to the videos.
 
-To quit this application, hit Ctrl-C.
-
-### Result
-This application produces two database files, i.e. JSON files.
-
-* `youtube-comments.nosql` consists of comments `youtube-comment-scraper` returns,
-* `channels.nosql` consists of channel descriptions.
+# License
+This software is released under the MIT License, see [LICENSE](LICENSE).
