@@ -23,11 +23,12 @@ FROM node:wheezy
 MAINTAINER Junpei Kawamoto <kawamoto.junpei@gmail.com>
 
 VOLUME /data
+WORKDIR /root
 RUN npm update npm
 
 ADD package.json .
 RUN npm install
 COPY . .
-RUN npm run build
 
+ENTRYPOINT ["/bin/bash"]
 CMD ["./bin/cli.js", "--id", "/data/ids.json", "--comment", "/data/comments.json"]

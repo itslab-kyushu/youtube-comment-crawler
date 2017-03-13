@@ -22,7 +22,7 @@ def start():
     """Start crawling.
     """
     with cd(PACKAGE):
-        run("docker run -d --name {0} -v $(pwd)/data:/data itslabq/{0}".format(PACKAGE))
+        run("docker run -d --name {0} -v $(pwd)/data:/data:Z itslabq/{0}".format(PACKAGE))
 
 
 @task
