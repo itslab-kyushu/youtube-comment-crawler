@@ -4,8 +4,8 @@
   "description": "Youtube comment crawler",
   "main": "lib/crawler.js",
   "scripts": {
-    "start": "./bin/cli.js --id ./data/ids.json --comment ./data/comments.json",
-    "crawl": "./bin/cli.js --id ./data/ids.json --comment ./data/comments.json crawl",
+    "start": "./bin/cli.js --dir ./data/",
+    "crawl": "./bin/cli.js --dir ./data/ crawl",
     "test": "mocha",
     "check-update": "ncu -u"
   },
