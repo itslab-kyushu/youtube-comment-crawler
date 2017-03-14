@@ -18,19 +18,16 @@ const argv = require("yargs")
     .option("lang", {
         describe: "Language to be used to scrape trand pages. Not used in crawl command."
     })
-    .default("lang", "JP")
-    .option("id", {
-        describe: "Path to the ID database file"
+    .default("lang", "EN")
+    .option("dir", {
+        describe: "Path to the directory to store database files"
     })
-    .option("comment", {
-        describe: "Path to the comment database file"
-    })
-    .demandOption(["id", "comment"])
+    .demandOption(["dir"])
     .command("*", "Start crawling", () => {}, (argv) => {
-        start(argv.lang, argv.id, argv.comment);
+        start(argv.lang, argv.dir);
     })
     .command("crawl", "Crawl comments form a video", () => {}, (argv) => {
-        crawl(argv.id, argv.comment).catch((err) => {
+        crawl(argv.dir).catch((err) => {
             console.error(err);
         });
     })
