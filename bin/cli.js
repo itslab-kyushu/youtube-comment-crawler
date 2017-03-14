@@ -30,8 +30,10 @@ const argv = require("yargs")
         start(argv.lang, argv.id, argv.comment);
     })
     .command("crawl", "Crawl comments form a video", () => {}, (argv) => {
-        crawl(argv.id, argv.comment);
+        crawl(argv.id, argv.comment).catch((err) => {
+            console.error(err);
+        });
     })
-    .help('h')
-    .alias('h', 'help')
+    .help("h")
+    .alias("h", "help")
     .argv;
