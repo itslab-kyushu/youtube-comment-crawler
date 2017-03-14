@@ -82,6 +82,17 @@ describe("Class Database", function() {
 
     });
 
+    describe("nIDs function", () => {
+
+        it("Returns the number of video IDs stored in a database", () => {
+            const db = new Database(dir);
+            return db.nIDs().then((count) => {
+                assert.equal(count, 2, "The database has two documents");
+            });
+        });
+
+    });
+
     describe("StoreIDs function", () => {
 
         it("Inserts a given set of IDs", () => {
