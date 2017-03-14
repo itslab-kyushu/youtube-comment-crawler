@@ -1,6 +1,8 @@
 ---
 title: YouTube Comment Crawler
+type: homepage
 date: 2017-03-14
+lastmod: 2017-03-14
 description: Crawling comments from Youtube.
 ---
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
@@ -62,6 +64,6 @@ $ docker run -d --name crawler -v $(pwd)/data:/data:Z itslabq/youtube-comment-cr
 ```
 
 
-# License
+## License
 This software is released under the MIT License,
 see [LICENSE](https://github.com/itslab-kyushu/youtube-comment-crawler/blob/master/LICENSE).
