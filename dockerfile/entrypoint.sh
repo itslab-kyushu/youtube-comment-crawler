@@ -8,8 +8,11 @@
 #
 # http://opensource.org/licenses/mit-license.php
 #
-if [[ $# == 0 ]]; then
+
+# Entrypoint of docker containers.
+# For debugging, if the first argument is "bash", start bash.
+#
+if [[ $1 == "bash" ]]; then
   exec /bin/bash
 fi
-
-/root/bin/cli.js $@
+/root/bin/cli.js --dir /data $@

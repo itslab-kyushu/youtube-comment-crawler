@@ -19,4 +19,3 @@ RUN npm install
 COPY . .
 
 ENTRYPOINT ["/root/dockerfile/entrypoint.sh"]
-CMD ["--id", "/data/ids.json", "--comment", "/data/comments.json"]
