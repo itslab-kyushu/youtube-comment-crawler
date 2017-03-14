@@ -8,6 +8,8 @@
 # http://opensource.org/licenses/mit-license.php
 #
 machine:
+  node:
+    version: 7.7.2
   services:
     - docker
 
