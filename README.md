@@ -1,7 +1,7 @@
 # Youtube Comment Crawler
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 [![CircleCI](https://circleci.com/gh/itslab-kyushu/youtube-comment-crawler/tree/master.svg?style=svg)](https://circleci.com/gh/itslab-kyushu/youtube-comment-crawler/tree/master)
-[![Release](https://img.shields.io/badge/release-0.1.0-brightgreen.svg)](https://github.com/itslab-kyushu/youtube-comment-crawler/releases/tag/v0.1.0)
+[![Release](https://img.shields.io/badge/release-0.2.0-brightgreen.svg)](https://github.com/itslab-kyushu/youtube-comment-crawler/releases/tag/v0.2.0)
 [![Dockerhub](https://img.shields.io/badge/dockerhub-itslabq%2Fyoutube--comment--crawler-blue.svg)](https://hub.docker.com/r/itslabq/youtube-comment-crawler/)
 [![MicroBadger](https://images.microbadger.com/badges/image/itslabq/youtube-comment-crawler.svg)](https://microbadger.com/images/itslabq/youtube-comment-crawler)
 
