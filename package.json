@@ -4,9 +4,9 @@
   "description": "Youtube comment crawler",
   "main": "lib/crawler.js",
   "scripts": {
-    "start": "./bin/cli.js --id ./data/ids.json --comment ./data/comments.json",
-    "crawl": "./bin/cli.js --id ./data/ids.json --comment ./data/comments.json crawl",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./bin/cli.js --dir ./data/",
+    "crawl": "./bin/cli.js --dir ./data/ crawl",
+    "test": "mocha",
     "check-update": "ncu -u"
   },
   "author": "Junpei Kawamoto <kawamoto.junpei@gmail.com>",
@@ -28,6 +28,9 @@
     "youtube-comment-scraper": "^0.2.1"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
+    "glob": "^7.1.1",
+    "mocha": "^3.2.0",
     "npm-check-updates": "^2.10.2"
   },
   "files": [

@@ -1,0 +1,23 @@
+#
+# circle.yml
+#
+# Copyright (c) 2016-2017 Junpei Kawamoto
+#
+# This software is released under the MIT License.
+#
+# http://opensource.org/licenses/mit-license.php
+#
+machine:
+  services:
+    - docker
+
+test:
+  post:
+    - docker build --rm=false -t itslabq/youtube-comment-crawler -f dockerfile/Dockerfile .
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push itslabq/youtube-comment-crawler
