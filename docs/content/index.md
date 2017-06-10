@@ -23,7 +23,7 @@ See the project page for more information about the format.
 ### Prepare
 After cloning this repository, install related modules via npm:
 
-```sh
+```shell
 $ git clone https://github.com/itslab-kyushu/youtube-comment-crawler.git
 $ cd youtube-comment-crawler
 $ npm install
@@ -32,7 +32,7 @@ $ npm install
 ### Start
 To start the crawling service and store database files into `./data`, run
 
-```sh
+```shell
 $ npm start --dir ./data
 ```
 
@@ -40,7 +40,7 @@ By default, it crawls English page;
 to crawl pages in another language, give the language via `--lang` option.
 For example, the following command starts to crawl Japanese pages:
 
-```sh
+```shell
 $ npm start --dir ./data --lang JP
 ```
 
@@ -52,14 +52,14 @@ It stores database files in `/data` and you shouldn't give `--dir` option.
 To run a container and mount `./data` so that database files are stored in
 `./data`:
 
-```sh
+```shell
 $ docker run -d --name crawler -v $(pwd)/data:/data:Z itslabq/youtube-comment-crawler
 ```
 
 If you want to crawl pages in another language, give the language via `--lang`
 option. The following example starts to crawl Japanese pages:
 
-```sh
+```shell
 $ docker run -d --name crawler -v $(pwd)/data:/data:Z itslabq/youtube-comment-crawler --lang JP
 ```
 
