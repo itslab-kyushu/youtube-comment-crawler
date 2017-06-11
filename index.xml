@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>YouTube Comment Crawler</title>
+    <link>https://itslab-kyushu.github.io/youtube-comment-crawler/index.xml</link>
+    <description>Recent content on YouTube Comment Crawler</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 14 Mar 2017 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://itslab-kyushu.github.io/youtube-comment-crawler/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>YouTube Comment Crawler</title>
+      <link>https://itslab-kyushu.github.io/youtube-comment-crawler/</link>
+      <pubDate>Tue, 14 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://itslab-kyushu.github.io/youtube-comment-crawler/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;LICENSE&#34;&gt;&lt;img src=&#34;http://img.shields.io/badge/license-MIT-blue.svg?style=flat&#34; alt=&#34;MIT License&#34; /&gt;&lt;/a&gt;
+&lt;a href=&#34;https://circleci.com/gh/itslab-kyushu/youtube-comment-crawler/tree/master&#34;&gt;&lt;img src=&#34;https://circleci.com/gh/itslab-kyushu/youtube-comment-crawler/tree/master.svg?style=svg&#34; alt=&#34;CircleCI&#34; /&gt;&lt;/a&gt;
+&lt;a href=&#34;https://github.com/itslab-kyushu/youtube-comment-crawler/releases/tag/v0.2.0&#34;&gt;&lt;img src=&#34;https://img.shields.io/badge/release-0.2.0-brightgreen.svg&#34; alt=&#34;Release&#34; /&gt;&lt;/a&gt;
+&lt;a href=&#34;https://hub.docker.com/r/itslabq/youtube-comment-crawler/&#34;&gt;&lt;img src=&#34;https://img.shields.io/badge/dockerhub-itslabq%2Fyoutube--comment--crawler-blue.svg&#34; alt=&#34;Dockerhub&#34; /&gt;&lt;/a&gt;
+&lt;a href=&#34;https://microbadger.com/images/itslabq/youtube-comment-crawler&#34;&gt;&lt;img src=&#34;https://images.microbadger.com/badges/image/itslabq/youtube-comment-crawler.svg&#34; alt=&#34;MicroBadger&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Scraping trending video page every day and comments posted to those videos
+every 30 mins.&lt;/p&gt;
+
+&lt;p&gt;Crawled comments are stored in &lt;code&gt;comments.json&lt;/code&gt;; each line of the file consists
+of a JSON object outputted by
+&lt;a href=&#34;https://github.com/itslab-kyushu/youtube-comment-scraper&#34;&gt;youtube-comment-scraper&lt;/a&gt;.
+See the project page for more information about the format.&lt;/p&gt;
+
+&lt;h2 id=&#34;run-via-npm&#34;&gt;Run via npm&lt;/h2&gt;
+
+&lt;h3 id=&#34;prepare&#34;&gt;Prepare&lt;/h3&gt;
+
+&lt;p&gt;After cloning this repository, install related modules via npm:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;$ git clone https://github.com/itslab-kyushu/youtube-comment-crawler.git
+$ cd youtube-comment-crawler
+$ npm install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;start&#34;&gt;Start&lt;/h3&gt;
+
+&lt;p&gt;To start the crawling service and store database files into &lt;code&gt;./data&lt;/code&gt;, run&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;$ npm start --dir ./data
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;By default, it crawls English page;
+to crawl pages in another language, give the language via &lt;code&gt;--lang&lt;/code&gt; option.
+For example, the following command starts to crawl Japanese pages:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;$ npm start --dir ./data --lang JP
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;run-as-a-docker-container&#34;&gt;Run as a docker container&lt;/h2&gt;
+
+&lt;p&gt;Youtube Comment Crawler is also provided as a docker image,
+&lt;a href=&#34;https://hub.docker.com/r/itslabq/youtube-comment-crawler/&#34;&gt;itslabq/youtube-comment-crawler&lt;/a&gt;.
+It stores database files in &lt;code&gt;/data&lt;/code&gt; and you shouldn&amp;rsquo;t give &lt;code&gt;--dir&lt;/code&gt; option.&lt;/p&gt;
+
+&lt;p&gt;To run a container and mount &lt;code&gt;./data&lt;/code&gt; so that database files are stored in
+&lt;code&gt;./data&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;$ docker run -d --name crawler -v $(pwd)/data:/data:Z itslabq/youtube-comment-crawler
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you want to crawl pages in another language, give the language via &lt;code&gt;--lang&lt;/code&gt;
+option. The following example starts to crawl Japanese pages:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;$ docker run -d --name crawler -v $(pwd)/data:/data:Z itslabq/youtube-comment-crawler --lang JP
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;license&#34;&gt;License&lt;/h2&gt;
+
+&lt;p&gt;This software is released under the MIT License,
+see &lt;a href=&#34;https://github.com/itslab-kyushu/youtube-comment-crawler/blob/master/LICENSE&#34;&gt;LICENSE&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
